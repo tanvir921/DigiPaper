@@ -17,12 +17,9 @@ class CustomSlider extends StatefulWidget {
 }
 
 class _CustomSliderState extends State<CustomSlider>
-    with AutomaticKeepAliveClientMixin<CustomSlider>{
-
+    with AutomaticKeepAliveClientMixin<CustomSlider> {
   @override
   bool get wantKeepAlive => true;
-
-
 
   List<Results>? filteredList;
 
@@ -47,7 +44,7 @@ class _CustomSliderState extends State<CustomSlider>
 
   Future<void> fetchNewsWithWithoutImg() async {
     final latestNews1 = await ApiCall.apicall();
-    if (latestNews1.status=='success') {
+    if (latestNews1.status == 'success') {
       setState(() {
         filteredList = latestNews1.results
             ?.where((result) => result.imageUrl != null)
@@ -70,112 +67,126 @@ class _CustomSliderState extends State<CustomSlider>
         width: context.width,
         child: filteredList != null
             ? CarouselSlider.builder(
-          key: PageStorageKey<String>('carousel_slider'),
-          itemCount: 3,
-          itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
-            final result = filteredList![itemIndex];
-            return Container(
-              color: itemIndex % 2 == 0 ? Colors.red : Colors.blue,
-              child: Container(
-                height: context.height * .5,
-                width: context.width,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(result.imageUrl!),
-                    fit: BoxFit.cover,
-                    colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(0.2),
-                      BlendMode.darken,
-                    ),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(30, 30, 30, 40),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 35,
-                        width: 135,
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(50),
-                          ),
-                          color: Colors.white.withOpacity(0.45),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'News of the day',
-                            style: TextStyle(color: Colors.white),
+                key: PageStorageKey<String>('carousel_slider'),
+                itemCount: 3,
+                itemBuilder:
+                    (BuildContext context, int itemIndex, int pageViewIndex) {
+                  final result = filteredList![itemIndex];
+                  return Container(
+                    color: itemIndex % 2 == 0 ? Colors.red : Colors.blue,
+                    child: Container(
+                      height: context.height * .5,
+                      width: context.width,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(result.imageUrl!),
+                          fit: BoxFit.cover,
+                          colorFilter: ColorFilter.mode(
+                            Colors.black.withOpacity(0.3),
+                            BlendMode.darken,
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Text(
-                        HtmlUnescape().convert(
-
-                          result.title!.length > 60
-                              ? '${result.title!.substring(0, 60)}...'
-                              : result.title!
-                        ),
-                        textAlign: TextAlign.left,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(context,MaterialPageRoute(builder: (context) =>DetailView(title: result.title.toString(), time: result.pubDate.toString(), imageUrl: result.imageUrl.toString(),detailNews: result.content.toString(), newsLink: result.link.toString(),)));
-                        },
-                        child: Row(
-                          children: const [
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(30, 30, 30, 40),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: 35,
+                              width: 135,
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(50),
+                                ),
+                                color: Colors.white.withOpacity(0.45),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'News of the day',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
                             Text(
-                              'Learn More',
-                              style: TextStyle(
+                              HtmlUnescape().convert(result.title!.length > 60
+                                  ? '${result.title!.substring(0, 60)}...'
+                                  : result.title!),
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(
                                 color: Colors.white,
-                                fontSize: 16,
+                                fontSize: 25,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(
-                              width: 5,
+                            const SizedBox(
+                              height: 20,
                             ),
-                            Icon(
-                              Icons.arrow_forward,
-                              color: Colors.white,
-                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => DetailView(
+                                      title: result.title.toString(),
+                                      time: result.pubDate.toString(),
+                                      imageUrl: result.imageUrl.toString(),
+                                      detailNews: result.content.toString(),
+                                      newsLink: result.link.toString(),
+                                      description:
+                                          result.description.toString(),
+                                      category: result.category!.toList(),
+                                      creator: result.creator!.toList(),
+                                      country: result.country!.toList(),
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Row(
+                                children: const [
+                                  Text(
+                                    'Learn More',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Icon(
+                                    Icons.arrow_forward,
+                                    color: Colors.white,
+                                  ),
+                                ],
+                              ),
+                            )
                           ],
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    ),
+                  );
+                },
+                options: CarouselOptions(
+                  autoPlay: true,
+                  viewportFraction: 1,
+                  height: context.height * .5,
+                ),
+              )
+            : Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
+                child: Container(
+                  color: Colors.white,
+                  height: context.height * .5,
+                  width: context.width,
                 ),
               ),
-            );
-          },
-          options: CarouselOptions(
-            autoPlay: true,
-            viewportFraction: 1,
-            height: context.height * .5,
-          ),
-        )
-            : Shimmer.fromColors(
-          baseColor: Colors.grey[300]!,
-          highlightColor: Colors.grey[100]!,
-          child: Container(
-            color: Colors.white,
-            height: context.height * .5,
-            width: context.width,
-          ),
-        ),
       ),
     );
   }

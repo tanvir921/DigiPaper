@@ -1,3 +1,4 @@
+import 'package:digipaper/helpers/first_later_capitalizationer.dart';
 import 'package:digipaper/models/latest_news_model.dart';
 import 'package:digipaper/responsive/mediaquery.dart';
 import 'package:digipaper/ui/screens/detail_view.dart';
@@ -13,9 +14,7 @@ class NewsLayout extends StatefulWidget {
 }
 
 class _NewsLayoutState extends State<NewsLayout>
-    with AutomaticKeepAliveClientMixin<NewsLayout>
-{
-
+    with AutomaticKeepAliveClientMixin<NewsLayout> {
   @override
   bool get wantKeepAlive => true;
 
@@ -27,7 +26,6 @@ class _NewsLayoutState extends State<NewsLayout>
 
   @override
   Widget build(BuildContext context) {
-
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
       child: Column(
@@ -75,26 +73,56 @@ class _NewsLayoutState extends State<NewsLayout>
                     margin: const EdgeInsets.only(top: 10),
                     child: InkWell(
                       onTap: () {
-                        Navigator.push(context,MaterialPageRoute(builder: (context) =>DetailView(title: snapshot.data!.results![index].title.toString(), time: snapshot.data!.results![index].pubDate.toString(), imageUrl: snapshot.data!.results![index].imageUrl.toString(),detailNews: snapshot.data!.results![index].content.toString(), newsLink: snapshot.data!.results![index].link.toString(),)));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailView(
+                              title: snapshot.data!.results![index].title
+                                  .toString(),
+                              time: snapshot.data!.results![index].pubDate
+                                  .toString(),
+                              imageUrl: snapshot.data!.results![index].imageUrl
+                                  .toString(),
+                              detailNews: snapshot.data!.results![index].content
+                                  .toString(),
+                              newsLink: snapshot.data!.results![index].link
+                                  .toString(),
+                              description: snapshot
+                                  .data!.results![index].description
+                                  .toString(),
+                              category: snapshot.data!.results![index].category!
+                                  .toList(),
+                              creator: snapshot.data!.results![index].creator!
+                                  .toList(),
+                              country: snapshot.data!.results![index].country!
+                                  .toList(),
+                            ),
+                          ),
+                        );
                       },
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
-                              height: 120,
-                              width: 120,
-                              decoration: BoxDecoration(
-                                  color: Colors.amber,
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(15),
-                                  ),
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                        snapshot.data!.results![index].imageUrl == null? 'https://static.vecteezy.com/system/resources/thumbnails/021/109/637/small_2x/newspaper-icon-design-free-vector.jpg':
-                                      snapshot.data!.results![index].imageUrl.toString(),
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),),),
+                            height: 120,
+                            width: 120,
+                            decoration: BoxDecoration(
+                              color: Colors.amber,
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(15),
+                              ),
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                  snapshot.data!.results![index].imageUrl ==
+                                          null
+                                      ? 'https://static.vecteezy.com/system/resources/thumbnails/021/109/637/small_2x/newspaper-icon-design-free-vector.jpg'
+                                      : snapshot.data!.results![index].imageUrl
+                                          .toString(),
+                                ),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
                           Padding(
                             padding: const EdgeInsets.only(
                               left: 10,
@@ -106,7 +134,15 @@ class _NewsLayoutState extends State<NewsLayout>
                                 Container(
                                   width: context.width * 0.56,
                                   child: Text(
-                                    HtmlUnescape().convert(snapshot.data!.results![index].title.toString().length>60? '${snapshot.data!.results![index].title.toString().substring(0, 60)}...': snapshot.data!.results![index].title.toString(),),
+                                    HtmlUnescape().convert(
+                                      snapshot.data!.results![index].title
+                                                  .toString()
+                                                  .length >
+                                              60
+                                          ? '${snapshot.data!.results![index].title.toString().substring(0, 60)}...'
+                                          : snapshot.data!.results![index].title
+                                              .toString(),
+                                    ),
                                     textAlign: TextAlign.left,
                                     style: const TextStyle(
                                         color: Colors.black,
@@ -120,7 +156,8 @@ class _NewsLayoutState extends State<NewsLayout>
                                 SizedBox(
                                   width: context.width * 0.56,
                                   child: Text(
-                                    snapshot.data!.results![index].pubDate.toString(),
+                                    snapshot.data!.results![index].pubDate
+                                        .toString(),
                                     style: const TextStyle(
                                       color: Colors.grey,
                                       fontStyle: FontStyle.italic,
@@ -134,52 +171,40 @@ class _NewsLayoutState extends State<NewsLayout>
                                   height: 25,
                                   width: context.width * 0.5,
                                   child: ListView.builder(
-                                    itemCount: snapshot.data!.results![index].category?.length,
+                                    itemCount: snapshot
+                                        .data!.results![index].category?.length,
                                     scrollDirection: Axis.horizontal,
                                     shrinkWrap: true,
                                     itemBuilder: (BuildContext context, int i) {
-                                    return
-                                     Container(
-                                       height: 25,
-                                       margin: const EdgeInsets.only(right: 5),
-                                      decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(8),
-                                        ),
-                                        color: Colors.black45,
-                                      ),
-                                      child: Center(
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                            left: 5,
-                                            right: 5,
-                                            top: 5,
-                                            bottom: 5,
+                                      return Container(
+                                        height: 25,
+                                        margin: const EdgeInsets.only(right: 5),
+                                        decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(8),
                                           ),
-                                          child: Text(
-                                            snapshot.data!.results![index].category![i].toString()=='top'? 'Top':
-                                            snapshot.data!.results![index].category![i].toString()=='business'? 'Business':
-                                            snapshot.data!.results![index].category![i].toString()=='entertainment'? 'Entertainment':
-                                            snapshot.data!.results![index].category![i].toString()=='environment'? 'Environment':
-                                            snapshot.data!.results![index].category![i].toString()=='food'? 'Food':
-                                            snapshot.data!.results![index].category![i].toString()=='health'? 'Health':
-                                            snapshot.data!.results![index].category![i].toString()=='politics'? 'Politics':
-                                            snapshot.data!.results![index].category![i].toString()=='science'? 'Science':
-                                            snapshot.data!.results![index].category![i].toString()=='sports'? 'Sports':
-                                            snapshot.data!.results![index].category![i].toString()=='technology'? 'Technology':
-                                            snapshot.data!.results![index].category![i].toString()=='tourism'? 'Tourism':
-                                            snapshot.data!.results![index].category![i].toString()=='world'? 'World':
-                                            'Other',
-                                             textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 13,
+                                          color: Colors.black45,
+                                        ),
+                                        child: Center(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 5,
+                                              right: 5,
+                                              top: 5,
+                                              bottom: 5,
+                                            ),
+                                            child: Text(
+                                              FirstLaterCapitalizatoner.capitalizeFirstLetter(snapshot.data!.results![i].category![i].toString(),),
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 13,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    );
-                                  },
+                                      );
+                                    },
                                   ),
                                 ),
                               ],

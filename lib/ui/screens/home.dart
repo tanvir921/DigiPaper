@@ -101,7 +101,7 @@ class _HomeState extends State<Home> {
           //elevation: 50,
           //type: BottomNavigationBarType.fixed,
           iconSize: 24.0,
-          selectedItemColor: Colors.red,
+          selectedItemColor: Colors.green,
           showUnselectedLabels: false,
           selectedFontSize: 14.0,
           unselectedFontSize: 12.0,
@@ -117,7 +117,7 @@ class _HomeState extends State<Home> {
               label: 'Discover',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.people),
+              icon: Icon(Icons.account_circle_outlined),
               label: 'Profile',
             ),
           ],
