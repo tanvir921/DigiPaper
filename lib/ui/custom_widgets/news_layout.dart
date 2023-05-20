@@ -2,6 +2,7 @@ import 'package:digipaper/helpers/first_later_capitalizationer.dart';
 import 'package:digipaper/models/latest_news_model.dart';
 import 'package:digipaper/responsive/mediaquery.dart';
 import 'package:digipaper/ui/screens/detail_view.dart';
+import 'package:digipaper/ui/screens/latest_newses.dart';
 import 'package:digipaper/ui/shimmers/latest_news_shimmer.dart';
 import 'package:digipaper/utils/api_call.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,15 @@ class _NewsLayoutState extends State<NewsLayout>
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LatestNewses(),
+                    ),
+                  );
+                },
                 child: const Text(
                   'More',
                   style: TextStyle(
