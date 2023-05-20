@@ -43,6 +43,7 @@ dependencies:
   html_unescape: ^2.0.0
   sliver_app_bar_builder: ^1.0.4
   appbar_animated: ^0.0.3
+  webview_flutter: ^4.2.0
   
 
 dev_dependencies:

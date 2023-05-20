@@ -1,6 +1,7 @@
 import 'package:appbar_animated/appbar_animated.dart';
 import 'package:digipaper/helpers/first_later_capitalizationer.dart';
 import 'package:digipaper/responsive/mediaquery.dart';
+import 'package:digipaper/ui/screens/more_webview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:html_unescape/html_unescape.dart';
@@ -49,7 +50,7 @@ class _DetailViewState extends State<DetailView> {
              const ColorBuilder(Colors.transparent, Colors.green),
         textColorAppBar: const ColorBuilder(Colors.white),
         appBarBuilder: _appBar,
-        appBarHeight: 85,
+        appBarHeight: 75,
 
         child: SingleChildScrollView(
           child: Stack(
@@ -265,25 +266,30 @@ class _DetailViewState extends State<DetailView> {
                           height: 10,
                         ),
 
-                        const Divider(
-                          height: 5,
-                          thickness: 2,
-                          color: Colors.black,
-                        ),
+                        Visibility(
+                          visible: widget.description.toString()=='null'? false: true,
+                          child: Column(children: [
+                            const Divider(
+                              height: 5,
+                              thickness: 2,
+                              color: Colors.black,
+                            ),
 
-                        Container(
-                          margin: const EdgeInsets.only(top: 10),
-                          child: Text(widget.description, style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
+                            Container(
+                              margin: const EdgeInsets.only(top: 10),
+                              child: Text(widget.description, style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
 
-                          ),),
-                        ),
-                        const SizedBox(height: 10,),
-                        const Divider(
-                          height: 5,
-                          thickness: 2,
-                          color: Colors.black,
+                              ),),
+                            ),
+                            const SizedBox(height: 10,),
+                            const Divider(
+                              height: 5,
+                              thickness: 2,
+                              color: Colors.black,
+                            ),
+                          ],),
                         ),
                         Container(
                           margin: const EdgeInsets.only(top: 10),
@@ -295,56 +301,56 @@ class _DetailViewState extends State<DetailView> {
                         ),
 
 
-                        InkWell(
-                          onTap: (){},
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Container(
-                              height: 40,
-                              width: 120,
-                              margin: EdgeInsets.only(top: 10),
-                              //padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                              decoration:  BoxDecoration(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(50),
+                        Visibility(
+                          visible: widget.newsLink.toString() == 'null'? false: true,
+                          child: InkWell(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => MoreWebview(url: widget.newsLink.toString(),),),);
+                            },
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Container(
+                                height: 40,
+                                width: 120,
+                                margin: const EdgeInsets.only(top: 10),
+                                //padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                                decoration:  const BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(50),
+                                  ),
+                                  color: Colors.black,
                                 ),
-                                color: Colors.black,
-                              ),
-                              child: Center(
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
+                                child: Center(
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
 
-                                    Center(
-                                      child: Text(
-                                        'More',
+                                      Center(
+                                        child: Text(
+                                          'More',
 
-                                        style: TextStyle(
-                                          color: Colors.white,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
-                                    ),
 
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Icon(
-                                      Icons.arrow_forward,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-
-                                  ],
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Icon(
+                                        Icons.arrow_forward,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-
-
-
-
                       ],
                     ),
                   ),
