@@ -45,13 +45,13 @@ class _LatestNewsesState extends State<LatestNewses>
         ),),
         centerTitle: true,
       ),
-      body: FutureBuilder<LatestNews>(
-        future: ApiCall.apicall(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Container(
-              margin: EdgeInsets.fromLTRB(15, 0, 15, 15),
-              child: ListView.builder(
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
+        child: FutureBuilder<LatestNews>(
+          future: ApiCall.apicall(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
                 key: const PageStorageKey<String>('latest_news'),
                 padding: const EdgeInsets.all(0),
                 scrollDirection: Axis.vertical,
@@ -207,12 +207,12 @@ class _LatestNewsesState extends State<LatestNewses>
                         ),
                       ),
                     ),
-              ),
-            );
-          } else {
-            return const NewsLayoutShimmer();
-          }
-        },
+              );
+            } else {
+              return const NewsLayoutShimmer();
+            }
+          },
+        ),
       ),
     );
   }
